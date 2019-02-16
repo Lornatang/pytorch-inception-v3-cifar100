@@ -20,7 +20,7 @@ if not os.path.exists(MODEL_PATH):
     os.makedirs(MODEL_PATH)
 
 transform = transforms.Compose([
-    transforms.RandomCrop(36, padding=4),
+    transforms.Resize(36),
     transforms.CenterCrop(32),
     transforms.ToTensor(),
     transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
