@@ -23,6 +23,7 @@ transform = transforms.Compose([
     transforms.RandomCrop(36, padding=4),
     transforms.CenterCrop(32),
     transforms.ToTensor(),
+    transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
 ])
 
 
@@ -33,7 +34,8 @@ dataset = torchvision.datasets.CIFAR100(root=WORK_DIR,
                                         transform=transform)
 
 dataset_loader = torch.utils.data.DataLoader(dataset=dataset,
-                                             batch_size=BATCH_SIZE)
+                                             batch_size=BATCH_SIZE,
+                                             shuffle=True)
 
 
 def main():
@@ -59,7 +61,7 @@ def main():
         # val_loader total
         total += labels.size(0)
         # add correct
-        correct += (predicted == labels).sum()
+        correct += (predicted == labels).sum().item()
 
     print(f"Acc: {correct / total:.4f}.")
 
