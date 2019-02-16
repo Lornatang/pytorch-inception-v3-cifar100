@@ -35,8 +35,7 @@ dataset = torchvision.datasets.CIFAR100(root=WORK_DIR,
                                         transform=transform)
 
 dataset_loader = torch.utils.data.DataLoader(dataset=dataset,
-                                             batch_size=BATCH_SIZE,
-                                             shuffle=True)
+                                             batch_size=BATCH_SIZE)
 
 
 def main():
@@ -44,9 +43,9 @@ def main():
 
     # Load model
     if device == 'cuda':
-        model = torch.load(MODEL_PATH + MODEL_NAME).to(device)
+        model = torch.load(MODEL_PATH + '/' + MODEL_NAME).to(device)
     else:
-        model = torch.load(MODEL_PATH + MODEL_NAME, map_location='cpu')
+        model = torch.load(MODEL_PATH + '/' + MODEL_NAME, map_location='cpu')
     model.eval()
 
     correct = 0.
