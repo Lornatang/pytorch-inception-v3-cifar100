@@ -22,9 +22,7 @@ if not os.path.exists(MODEL_PATH):
 transform = transforms.Compose([
     transforms.RandomCrop(36, padding=4),
     transforms.CenterCrop(32),
-    transforms.RandomHorizontalFlip(),
     transforms.ToTensor(),
-    transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
 ])
 
 
@@ -61,7 +59,7 @@ def main():
         # val_loader total
         total += labels.size(0)
         # add correct
-        correct += (predicted == labels).sum().item()
+        correct += (predicted == labels).sum()
 
     print(f"Acc: {correct / total:.4f}.")
 
