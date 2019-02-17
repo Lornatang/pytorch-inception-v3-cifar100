@@ -10,7 +10,7 @@ import torch.utils.data
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 WORK_DIR = './data'
-BATCH_SIZE = 128
+BATCH_SIZE = 64
 
 MODEL_PATH = './model'
 MODEL_NAME = 'GoogLeNet.pth'
