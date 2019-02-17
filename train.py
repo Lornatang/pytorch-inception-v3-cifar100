@@ -16,8 +16,8 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 WORK_DIR = './data'
 NUM_EPOCHS = 50
-BATCH_SIZE = 128
-LEARNING_RATE = 1e-4
+BATCH_SIZE = 64
+LEARNING_RATE = 1e-2
 
 MODEL_PATH = './model'
 MODEL_NAME = 'GoogLeNet.pth'
@@ -62,7 +62,7 @@ def main():
     optimizer = torch.optim.Adam(
         model.parameters(),
         lr=LEARNING_RATE,
-        weight_decay=1e-8)
+        weight_decay=1e-4)
     step = 1
     for epoch in range(1, NUM_EPOCHS + 1):
         model.train()
