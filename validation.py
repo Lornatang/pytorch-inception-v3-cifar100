@@ -14,7 +14,6 @@ BATCH_SIZE = 64
 
 MODEL_PATH = './model'
 MODEL_NAME = 'GoogLeNet.pth'
-
 # Create model
 if not os.path.exists(MODEL_PATH):
     os.makedirs(MODEL_PATH)
