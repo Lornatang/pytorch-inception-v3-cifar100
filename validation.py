@@ -1,10 +1,9 @@
 import os
 
 import torch
+import torch.utils.data
 import torchvision
 from torchvision import transforms
-import torch.utils.data
-
 
 # Device configuration
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -13,18 +12,16 @@ WORK_DIR = './data'
 BATCH_SIZE = 64
 
 MODEL_PATH = './model'
-MODEL_NAME = 'GoogLeNet.pth'
+MODEL_NAME = 'Inception_v3.pth'
 # Create model
 if not os.path.exists(MODEL_PATH):
-    os.makedirs(MODEL_PATH)
+  os.makedirs(MODEL_PATH)
 
 transform = transforms.Compose([
-    transforms.Resize(36),
-    transforms.CenterCrop(32),
-    transforms.ToTensor(),
-    transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
+  transforms.Resize(36),
+  transforms.ToTensor(),
+  transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
 ])
-
 
 # Load data
 dataset = torchvision.datasets.CIFAR100(root=WORK_DIR,
@@ -38,32 +35,32 @@ dataset_loader = torch.utils.data.DataLoader(dataset=dataset,
 
 
 def main():
-    print(f"Val numbers:{len(dataset)}")
+  print(f"Val numbers:{len(dataset)}")
 
-    # Load model
-    if device == 'cuda':
-        model = torch.load(MODEL_PATH + '/' + MODEL_NAME).to(device)
-    else:
-        model = torch.load(MODEL_PATH + '/' + MODEL_NAME, map_location='cpu')
-    model.eval()
+  # Load model
+  if device == 'cuda':
+    model = torch.load(MODEL_PATH + '/' + MODEL_NAME).to(device)
+  else:
+    model = torch.load(MODEL_PATH + '/' + MODEL_NAME, map_location='cpu')
+  model.eval()
 
-    correct = 0.
-    total = 0
-    for images, labels in dataset_loader:
-        # to GPU
-        images = images.to(device)
-        labels = labels.to(device)
-        # print prediction
-        outputs = model(images)
-        # equal prediction and acc
-        _, predicted = torch.max(outputs.data, 1)
-        # val_loader total
-        total += labels.size(0)
-        # add correct
-        correct += (predicted == labels).sum().item()
+  correct = 0.
+  total = 0
+  for images, labels in dataset_loader:
+    # to GPU
+    images = images.to(device)
+    labels = labels.to(device)
+    # print prediction
+    outputs = model(images)
+    # equal prediction and acc
+    _, predicted = torch.max(outputs.data, 1)
+    # val_loader total
+    total += labels.size(0)
+    # add correct
+    correct += (predicted == labels).sum().item()
 
-    print(f"Acc: {correct / total:.4f}.")
+  print(f"Acc: {correct / total:.4f}.")
 
 
 if __name__ == '__main__':
-    main()
+  main()
